@@ -5,5 +5,10 @@ package day09;
  *
  */
 public class Test01 {
-
+    public static void main(String[] args) {
+        Thread01 t1 = new Thread01("你好!");
+        Thread01 t2 = new Thread01("再见!");
+        t1.start();
+        t2.start();
+    }
 }
