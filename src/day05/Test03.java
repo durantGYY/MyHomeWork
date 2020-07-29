@@ -1,4 +1,9 @@
 package day05;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+
 /**
  * 要求用户输入若干员工信息，格式为：
  * name,age,gender,salary,hiredate;name,age,gender,salary,hiredate;....
@@ -13,5 +18,26 @@ package day05;
  *
  */
 public class Test03 {
+    public static void main(String[] args) throws ParseException {
+        Scanner console = new Scanner(System.in);
+        String str = console.next();
+        String[] s = str.split(";");
+        List<Emp> list = new ArrayList<>();
+        SimpleDateFormat fo =new SimpleDateFormat("yyyy-MM-dd");
+        for(int i = 0; i < s.length; i++){
+            String[] ss = s[i].split(",");
+            Emp emps = new Emp(ss[0],Integer.parseInt(ss[1]),ss[2],Integer.parseInt(ss[3]),fo.parse(ss[4]));
+            list.add(emps);
+        }
+        Collections.sort(list);
+        System.out.println(list);
+        list.sort(new Comparator<Emp>() {
+            @Override
+            public int compare(Emp o1, Emp o2) {
+                return (int)(o2.getHireDate().getTime() - o1.getHireDate().getTime());
+            }
+        });
+        System.out.println(list);
+    }
 
 }
