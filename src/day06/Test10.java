@@ -1,5 +1,12 @@
 package day06;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Scanner;
+
 /**
  * 要求用户输入一个员工信息，格式为：
  * name,age,gender,salary,hiredate
@@ -14,6 +21,25 @@ package day06;
  *
  */
 public class Test10 {
-	
+    public static void main(String[] args) throws ParseException {
+        Scanner console = new Scanner(System.in);
+        while (true)
+        {
+            String emps = console.next();
+            try {
+                if(emps.equals("exit")) throw new RuntimeException();
+                String[] s = emps.split(",");
+                SimpleDateFormat fo = new SimpleDateFormat("yyyy-MM-dd");
+                Emp emp = new Emp(s[0], Integer.parseInt(s[1]), s[2], Integer.parseInt(s[3]), fo.parse(s[4]));
+                PrintWriter writer = new PrintWriter(new FileWriter(emp.getName() + ".emp"), true);
+                writer.println(emp.toString());
+            } catch (RuntimeException e){
+                System.out.println("结束输入!");
+                return;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 	
 }
