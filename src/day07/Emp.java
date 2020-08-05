@@ -1,4 +1,9 @@
 package day07;
+
+import java.io.Serializable;
+import java.util.Date;
+import java.util.Objects;
+
 /**
  * 定义私有属性:
  * String name;
@@ -16,6 +21,89 @@ package day07;
  * @author Bonnie
  *
  */
-public class Emp {
+public class Emp implements Serializable {
+    public static final long serialVersionUID = 10088918L;
+    private String name;
+    private int age;
+    private String gender;
+    private int salary;
+    private Date hireDate;
 
+    public Emp() {
+
+    }
+
+    public Emp(String name, int age, String gender, int salary, Date hireDate) {
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+        this.salary = salary;
+        this.hireDate = hireDate;
+    }
+
+    @Override
+    public String toString() {
+        return
+                "姓名:" + name  + ", 年龄:" + age + ", 性别:" + gender + ", 薪资:" + salary + ", 入职时间:" + hireDate ;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Emp emp = (Emp) o;
+        return age == emp.age &&
+                salary == emp.salary &&
+                Objects.equals(name, emp.name) &&
+                Objects.equals(gender, emp.gender);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, age, gender, salary);
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public int getSalary() {
+        return salary;
+    }
+
+    public void setSalary(int salary) {
+        this.salary = salary;
+    }
+
+    public Date getHireDate() {
+        return hireDate;
+    }
+
+    public void setHireDate(Date hireDate) {
+        this.hireDate = hireDate;
+    }
 }
