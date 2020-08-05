@@ -1,4 +1,12 @@
 package day08;
+
+import java.io.*;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
+
 /**
  * 使用异常捕获机制完成下述读取操作，并在finally中有关闭RandomAccessFile操作。
  * 将emp.dat文件中所有员工解析出来，并创建为若干Emp实例存入一个
@@ -16,5 +24,36 @@ package day08;
  *
  */
 public class Test05 {
-
+    public static void main(String[] args) {
+        List<Emp> list = new ArrayList<>();
+        RandomAccessFile rf = null;
+        try {
+            File file = new File(Test05.class.getClassLoader().getResource("day08/emp.dat").toURI());
+            rf = new RandomAccessFile(file,"r");
+            int namel;
+            byte[] b1 = new byte[32];
+            while ((namel = rf.read(b1)) != -1){
+                String name = new String(b1);
+                Short age = rf.readShort();
+                byte[] b2 = new byte[10];
+                rf.read(b2);
+                String gender = new String(b2);
+                int salary = rf.readInt();
+                long hire = rf.readLong();
+                Date date = new Date(hire);
+                Emp emp = new Emp(name,age,gender,salary,date);
+                list.add(emp);
+            }
+        } catch (IOException | URISyntaxException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                rf.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        list.sort(Comparator.comparing(Emp::getHireDate));
+        System.out.println(list);
+    }
 }

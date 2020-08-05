@@ -1,4 +1,10 @@
 package day08;
+
+import java.io.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+
 /**
  * 使用异常捕获机制完成下述读取操作
  * 读取emp.txt文件，并将每个员工信息读取出来，以一个Emp实例保存，然后将
@@ -13,5 +19,29 @@ package day08;
  *
  */
 public class Test04 {
+    public static void main(String[] args) {
+        Map<String,Emp> map = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+        Scanner console = new Scanner(System.in);
+        try {
+            BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream("src/day08/emp.txt")));
+            String line;
+            while ((line = br.readLine()) != null){
+                String[] s = line.split(",");
+                SimpleDateFormat fo = new SimpleDateFormat("yyyy-MM-dd");
+                Emp emp = new Emp(s[0],Integer.parseInt(s[1]),s[2],Integer.parseInt(s[3]),fo.parse(s[4]));
+                map.put(emp.getName(),emp);
+            }
+            String name;
+            while (!(name = console.next()).equals("exit")){
+                if(map.containsKey(name)){
+                    System.out.println(map.get(name));
+                }else{
+                    System.out.println("查无此人!");
+                }
+            }
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
 
+    }
 }
